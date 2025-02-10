@@ -1,0 +1,17 @@
+@import 'tailwindcss';
+
+@layer components {
+  .outer-btn {
+    @apply mb-10 mx-2;
+    @apply size-10;
+    @apply border-2 rounded-xl;
+    @apply text-2xl;
+    @apply transition duration-100;
+  }
+  .outer-btn:hover {
+    @apply bg-neutral-200 scale-105;
+  }
+  .outer-btn:active {
+    @apply bg-neutral-400 scale-95;
+  }
+}

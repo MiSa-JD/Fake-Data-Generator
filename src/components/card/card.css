@@ -1,0 +1,91 @@
+@import 'tailwindcss';
+
+@layer components {
+  .cell {
+    @apply rounded-xl border-[2px];
+    @apply m-2 p-2;
+    @apply overflow-hidden;
+  }
+}
+
+@layer components {
+  .card-thumbnail {
+    @apply h-80;
+    @apply rounded-lg;
+    @apply overflow-hidden;
+  }
+  .card-thumbnail-pic {
+    @apply w-full h-full object-cover;
+  }
+  .card-tag-case {
+    @apply flex;
+    @apply space-x-1;
+    @apply my-1;
+    @apply overflow-x-scroll;
+  }
+  .card-tag-case::-webkit-scrollbar {
+    display: none;
+  }
+  .card-tag {
+    @apply rounded-lg border-[2px];
+    @apply w-fit;
+    @apply px-2 mt-0.5;
+    @apply text-sm;
+  }
+  .card-tag:hover {
+    @apply bg-neutral-200;
+  }
+  .card-contents {
+    @apply justify-items-start;
+    h1 {
+      @apply text-2xl font-bold;
+    }
+    p {
+      @apply text-start;
+    }
+  }
+}
+
+@layer components {
+  .btn-case {
+    @apply flex flex-row;
+  }
+  .btn {
+    /* border */
+    @apply rounded-lg border-[2px];
+    @apply grid place-items-center;
+    @apply w-full;
+    @apply m-0.5;
+    @apply transition duration-150;
+  }
+  .btn:hover {
+    @apply scale-[101%];
+    @apply ease-in-out;
+  }
+  .btn:active {
+    @apply scale-[99%];
+    @apply transition-none;
+  }
+
+  .next {
+    @apply text-neutral-100 bg-sky-500 border-sky-500;
+    @apply py-1;
+  }
+  .next:hover {
+    @apply text-neutral-300 bg-sky-600 border-sky-600;
+  }
+  .next:active {
+    @apply text-neutral-300 bg-sky-700 border-sky-700;
+  }
+
+  .readmore {
+    @apply text-sky-500 bg-white border-sky-500;
+    @apply py-1;
+  }
+  .readmore:hover {
+    @apply text-sky-700 bg-neutral-200;
+  }
+  .readmore:active {
+    @apply text-sky-700 bg-neutral-300;
+  }
+}
