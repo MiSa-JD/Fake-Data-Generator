@@ -10,9 +10,19 @@ interface CardProps {
   heading: string
   content: string
   className?: string
+  onRemove: (id: number) => void
+  id: number
 }
 
-function Card({ img = defaultImage, tag, heading, content, className = '' }: CardProps) {
+function Card({
+  img = defaultImage,
+  tag,
+  heading,
+  content,
+  className = '',
+  onRemove,
+  id
+}: CardProps) {
   //const color: string = setLabelColor({ label: label })
 
   // console.log(color)
@@ -31,7 +41,9 @@ function Card({ img = defaultImage, tag, heading, content, className = '' }: Car
       </div>
       <div className="btn-case">
         <button className="btn readmore">Read More</button>
-        <button className="btn next">Save</button>
+        <button className="btn next" onClick={() => onRemove(id)}>
+          Remove
+        </button>
       </div>
     </div>
   )

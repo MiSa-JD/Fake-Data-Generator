@@ -10,7 +10,7 @@ function AddButton() {
   const [items1, setItems1] = useState<JSX.Element[]>([])
   const [items2, setItems2] = useState<JSX.Element[]>([])
 
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState<number>(0)
 
   const resetBlocks = () => {
     setItems0([])
@@ -19,19 +19,33 @@ function AddButton() {
     setCount(0)
   }
 
-  const createBlock = () => {
-    const block = (
-      <>
-        <Card
-          img={randomImage()}
-          tag={randomSentence(random(1, 5)).replace('.', '').split(' ')}
-          heading={randomTitleText(random(4, 7))}
-          content={randomSentence(random(15, 50))}
-          className="w-"
-          key={`block-${count}`}
-        />
-      </>
+  const onRemove = (key: number) => {
+    setItems0(prevItems =>
+      prevItems.filter(item => Number(item.props.id) !== Number(key))
     )
+    setItems1(prevItems =>
+      prevItems.filter(item => Number(item.props.id) !== Number(key))
+    )
+    setItems2(prevItems =>
+      prevItems.filter(item => Number(item.props.id) !== Number(key))
+    )
+  }
+
+  const createBlock = () => {
+    const num = count
+    const block = (
+      <Card
+        img={randomImage()}
+        tag={randomSentence(random(1, 5)).replace('.', '').split(' ')}
+        heading={`${num}. ${randomTitleText(random(4, 7))}`}
+        content={randomSentence(random(15, 50))}
+        className="w-"
+        key={Number(num)}
+        id={Number(num)}
+        onRemove={() => onRemove(num)}
+      />
+    )
+
     /*Card({
       img: randomImage(),
       tag: randomSentence(random(1, 5)).split(' '),
@@ -45,7 +59,7 @@ function AddButton() {
     if (count % 3 == 1) setItems1([...items1, block])
     if (count % 3 == 0) setItems0([...items0, block])
 
-    setCount(count + 1)
+    setCount(i => i + 1)
   }
 
   return (
