@@ -3,32 +3,20 @@ import { randomSentence, randomTitleText } from '../data/chance'
 import { random } from '../data/util'
 import { randomImage } from '../data/image'
 import Card from './card/card'
-import { JSX, useState } from 'react'
+import { useState } from 'react'
+import { useContainer } from './containerBox'
 
 function AddButton() {
-  const [items0, setItems0] = useState<JSX.Element[]>([])
-  const [items1, setItems1] = useState<JSX.Element[]>([])
-  const [items2, setItems2] = useState<JSX.Element[]>([])
-
   const [count, setCount] = useState<number>(0)
-
-  const resetBlocks = () => {
-    setItems0([])
-    setItems1([])
-    setItems2([])
-    setCount(0)
-  }
+  const { setContainer } = useContainer()
 
   const onRemove = (key: number) => {
-    setItems0(prevItems =>
-      prevItems.filter(item => Number(item.props.id) !== Number(key))
-    )
-    setItems1(prevItems =>
-      prevItems.filter(item => Number(item.props.id) !== Number(key))
-    )
-    setItems2(prevItems =>
-      prevItems.filter(item => Number(item.props.id) !== Number(key))
-    )
+    setContainer(items => {
+      const result = items.flatMap((element, _) => {
+        return element.props.id !== key ? [element] : []
+      })
+      return result
+    })
   }
 
   const createBlock = () => {
@@ -39,48 +27,21 @@ function AddButton() {
         tag={randomSentence(random(1, 5)).replace('.', '').split(' ')}
         heading={`${num}. ${randomTitleText(random(4, 7))}`}
         content={randomSentence(random(15, 50))}
-        className="w-"
+        className=""
         key={Number(num)}
         id={Number(num)}
         onRemove={() => onRemove(num)}
       />
     )
 
-    /*Card({
-      img: randomImage(),
-      tag: randomSentence(random(1, 5)).split(' '),
-      heading: randomTitleText(random(4, 7)),
-      content: randomSentence(random(20, 50)),
-      className: 'w-fit'
-    })
-    */
-
-    if (count % 3 == 2) setItems2([...items2, block])
-    if (count % 3 == 1) setItems1([...items1, block])
-    if (count % 3 == 0) setItems0([...items0, block])
-
+    setContainer(items => [...items, block])
     setCount(i => i + 1)
   }
 
   return (
-    <>
-      <div className="flex">
-        <button className="outer-btn" onClick={createBlock}>
-          +
-        </button>
-        <button
-          className="grid px-10 outer-btn place-items-center w-fit"
-          onClick={resetBlocks}>
-          Reset
-        </button>
-      </div>
-
-      <div className="flex md:w-[100%] md:flex-wrap lg:w-[70%] lg:flex-nowrap">
-        <div className="spawner">{items0}</div>
-        <div className="spawner">{items1}</div>
-        <div className="spawner">{items2}</div>
-      </div>
-    </>
+    <button className="outer-btn" onClick={createBlock}>
+      +
+    </button>
   )
 }
 export default AddButton

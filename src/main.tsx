@@ -1,9 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import '../global.css'
-//import './index.css'
-//import Card from './components/card'
 import AddButton from './components/addbutton'
+import ResetButton from './components/resetbutton'
+import SpawnerBox from './components/spawner'
+import { ContainerProvider } from './components/containerBox'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -12,8 +13,14 @@ createRoot(document.getElementById('root')!).render(
         Fake Data Generator
       </div>
     </div>
-    <div className="grid place-items-center">
-      <AddButton />
-    </div>
+    <ContainerProvider>
+      <div className="grid place-items-center">
+        <div className="flex">
+          <AddButton />
+          <ResetButton />
+        </div>
+      </div>
+      <SpawnerBox />
+    </ContainerProvider>
   </StrictMode>
 )

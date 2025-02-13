@@ -15,3 +15,12 @@
     @apply bg-neutral-400 scale-95;
   }
 }
+
+@layer components {
+  .spawner-box {
+    @apply flex;
+  }
+  .spawner {
+    @apply flex-col;
+  }
+}
