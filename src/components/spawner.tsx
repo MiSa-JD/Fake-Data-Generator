@@ -6,22 +6,22 @@ function SpawnerBox() {
   const [spawners, setSpawners] = useState<JSX.Element[]>([])
   const [cols, setCols] = useState(1)
   const { container } = useContainer()
-  const curWidth = window.innerWidth
 
   function getCol(Width: number): number {
-    if (Width >= 1536) return 6 // 2xl
-    else if (Width >= 1280) return 5 // xl
-    else if (Width >= 1024) return 4 // lg
-    else if (Width >= 768) return 3 // md
-    else return 2 // sm
+    if (Width >= 1536) return 5 // 2xl
+    else if (Width >= 1280) return 4 // xl
+    else if (Width >= 1024) return 3 // lg
+    else if (Width >= 768) return 2 // md
+    else return 1 // sm
   }
 
   useEffect(() => {
     // 창 크기에 따라 세로 칸 개수 지정
     const resizeHandler = () => {
+      const curWidth = window.innerWidth
       setCols(getCol(curWidth))
+      console.log(curWidth)
     }
-    setCols(getCol(window.innerWidth))
     window.addEventListener('resize', resizeHandler)
     return () => {
       window.removeEventListener('resize', resizeHandler)
