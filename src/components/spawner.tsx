@@ -4,23 +4,25 @@ import './buttons.css'
 
 function SpawnerBox() {
   const [spawners, setSpawners] = useState<JSX.Element[]>([])
-  const [cols, setCols] = useState(0)
+  const [cols, setCols] = useState(1)
   const { container } = useContainer()
+  const curWidth = window.innerWidth
+
+  function getCol(Width: number): number {
+    if (Width >= 1536) return 6 // 2xl
+    else if (Width >= 1280) return 5 // xl
+    else if (Width >= 1024) return 4 // lg
+    else if (Width >= 768) return 3 // md
+    else return 2 // sm
+  }
 
   useEffect(() => {
     // 창 크기에 따라 세로 칸 개수 지정
     const resizeHandler = () => {
-      const curWidth = window.innerWidth
-
-      if (curWidth >= 1536) setCols(6) // 2xl
-      else if (curWidth >= 1280) setCols(5) // xl
-      else if (curWidth >= 1024) setCols(4) // lg
-      else if (curWidth >= 768) setCols(3) // md
-      else setCols(2) // sm
+      setCols(getCol(curWidth))
     }
-
+    setCols(getCol(window.innerWidth))
     window.addEventListener('resize', resizeHandler)
-
     return () => {
       window.removeEventListener('resize', resizeHandler)
     }
@@ -34,6 +36,7 @@ function SpawnerBox() {
   }, [cols])
 
   useEffect(() => {
+    if (cols !== getCol(window.innerWidth)) setCols(getCol(window.innerWidth))
     setSpawners(() => {
       return separateSpawners(cols, container)
     })
